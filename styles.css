@@ -64,16 +64,18 @@ button {
 .top-level-container {
   width: 100vw;
   height: 100vh;
-  padding: 100px 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   background: var(--background);
 }
 
 .mobile-phone {
   width: 390px;
-  height: 667px;
+  height: 800px;
   padding: 60px 32px;
-  margin: 0 auto;
 
   border-radius: 48px;
 
