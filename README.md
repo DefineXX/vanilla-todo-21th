@@ -1,12 +1,5 @@
 # 1주차 미션: Vanilla-Todo
 
-## 미션 목표
-
-- VSCode, Prettier를 이용하여 개발 환경을 관리합니다.
-- HTML/CSS의 기초를 이해합니다.
-- JavaScript를 이용한 DOM 조작을 이해합니다.
-- Vanilla Js를 이용한 어플리케이션 상태 관리 방법을 이해합니다.
-
 ## Key Questions
 
 - DOM은 무엇인가요?
