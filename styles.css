@@ -77,8 +77,8 @@ button {
 }
 
 .mobile-phone {
-  width: 390px;
-  height: 800px;
+  width: 100vw;
+  height: 100vh;
   padding: 60px 32px;
 
   background: var(--almond);
@@ -89,8 +89,8 @@ button {
   overflow: scroll;
 
   @media (min-width: 430px) {
-    width: 100vw;
-    height: 100vh;
+    width: 390px;
+    height: 800px;
     border-radius: 48px;
   }
 
