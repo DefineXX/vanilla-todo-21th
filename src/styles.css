@@ -88,7 +88,7 @@ button {
 .header {
   width: 100%;
   height: fit-content;
-  margin-bottom: 4.8rem;
+  margin-bottom: 3.2rem;
 
   display: flex;
   align-items: center;
@@ -100,10 +100,26 @@ button {
   color: var(--walnut);
 }
 
-.add-task-form {
+.date-task-container {
   width: 100%;
   height: fit-content;
   margin-bottom: 3.6rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.today-date {
+  margin-left: 0.2rem;
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  color: var(--walnut);
+}
+
+.add-task-form {
+  width: 100%;
+  height: fit-content;
 
   display: flex;
   justify-content: space-between;

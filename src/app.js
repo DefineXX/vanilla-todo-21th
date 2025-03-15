@@ -1,3 +1,18 @@
+const formattedTodayDate = () => {
+  const today = new Date();
+
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+  const day = String(today.getDate()).padStart(2, '0');
+
+  const weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+  const weekday = weekdays[today.getDay()];
+
+  return `${year}.${month}.${day} (${weekday})`;
+};
+
+document.querySelector('.today-date').textContent = formattedTodayDate();
+
 document.addEventListener('DOMContentLoaded', () => {
   const taskInput = document.querySelector('.add-task-input');
   const addTaskButton = document.querySelector('.add-task-button');
