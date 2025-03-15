@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskDeleteButton = document.createElement('button');
     taskDeleteButton.classList.add('task-delete-button');
     taskDeleteButton.innerHTML =
-      '<img src="public/trash.svg" alt="Delete Icon">';
+      '<img src="icons/trash.svg" alt="Delete Icon">';
 
     // Task 삭제 Event Listener
     taskDeleteButton.addEventListener('click', () => {
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         taskText.classList.add('done-task');
 
         const checkIcon = document.createElement('img');
-        checkIcon.src = 'public/check.svg';
+        checkIcon.src = 'icons/check.svg';
         checkIcon.alt = 'Check Icon';
         checkIcon.classList.add('check-icon');
         checkboxContainer.appendChild(checkIcon);
