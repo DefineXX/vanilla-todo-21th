@@ -44,6 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
         taskItem.classList.remove('done-item');
         taskItem.classList.add('to-do-item');
         taskText.classList.remove('done-text');
+
+        const checkIcon = document.querySelector('.check-icon');
+        if (checkIcon) {
+          checkIcon.remove();
+        }
+
         toDoList.appendChild(taskItem);
       }
     });
