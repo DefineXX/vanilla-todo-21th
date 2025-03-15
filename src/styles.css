@@ -146,6 +146,12 @@ button {
     -1px 1px 3px 0px rgba(187, 179, 170, 0.9);
 }
 
+.task-list-container {
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 6.4rem;
+}
+
 .subtitle {
   margin-bottom: 1.8rem;
 
