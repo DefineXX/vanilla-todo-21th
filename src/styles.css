@@ -185,7 +185,18 @@ button {
   gap: 2.4rem;
 }
 
+.task-delete-container {
+  width: 100%;
+  height: fit-content;
+
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+
 .task-item {
+  flex-grow: 1;
+
   width: 100%;
   height: fit-content;
   padding: 1.4rem 1.6rem;
@@ -198,6 +209,12 @@ button {
   background: transparent;
 
   overflow-x: scroll;
+}
+
+.task-delete-button {
+  width: fit-content;
+  height: fit-content;
+  padding: 0.2rem 0.4rem;
 }
 
 .to-do-item {
@@ -249,7 +266,7 @@ button {
 
 .task-text {
   font-size: var(--font-size-small);
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.4;
   color: var(--walnut);
 }

@@ -26,7 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const taskItem = document.createElement('li');
+    const taskDeleteContainer = document.createElement('li');
+    taskDeleteContainer.classList.add('task-delete-container');
+
+    const taskItem = document.createElement('div');
     taskItem.classList.add('task-item', 'to-do-item');
 
     const checkboxContainer = document.createElement('div');
@@ -42,6 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
     taskText.classList.add('task-text');
     taskText.textContent = taskValue;
 
+    const taskDeleteButton = document.createElement('button');
+    taskDeleteButton.classList.add('task-delete-button');
+    taskDeleteButton.innerHTML =
+      '<img src="public/trash.svg" alt="Delete Icon">';
+
     checkbox.addEventListener('change', () => {
       if (checkbox.checked) {
         taskItem.classList.remove('to-do-item');
@@ -54,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         checkIcon.classList.add('check-icon');
         checkboxContainer.appendChild(checkIcon);
 
-        doneList.appendChild(taskItem);
+        doneList.appendChild(taskDeleteContainer);
       } else {
         taskItem.classList.remove('done-item');
         taskItem.classList.add('to-do-item');
@@ -65,14 +73,17 @@ document.addEventListener('DOMContentLoaded', () => {
           checkIcon.remove();
         }
 
-        toDoList.appendChild(taskItem);
+        toDoList.appendChild(taskDeleteContainer);
       }
     });
 
     taskItem.appendChild(checkboxContainer);
     taskItem.appendChild(taskText);
 
-    toDoList.appendChild(taskItem);
+    taskDeleteContainer.appendChild(taskItem);
+    taskDeleteContainer.appendChild(taskDeleteButton);
+
+    toDoList.appendChild(taskDeleteContainer);
 
     taskInput.value = '';
   };
