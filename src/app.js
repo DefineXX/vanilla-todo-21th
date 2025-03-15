@@ -13,12 +13,25 @@ const formattedTodayDate = () => {
 
 document.querySelector('.today-date').textContent = formattedTodayDate();
 
-document.addEventListener('DOMContentLoaded', () => {
-  const taskInput = document.querySelector('.add-task-input');
-  const addTaskButton = document.querySelector('.add-task-button');
-  const toDoList = document.getElementById('to-do-list');
-  const doneList = document.getElementById('done-list');
+const taskInput = document.querySelector('.add-task-input');
+const addTaskButton = document.querySelector('.add-task-button');
+const toDoList = document.getElementById('to-do-list');
+const doneList = document.getElementById('done-list');
 
+// Task 개수 업데이트
+const updateTaskCount = () => {
+  const todoListCount = toDoList.childElementCount;
+  const doneListCount = doneList.childElementCount;
+
+  document.getElementById(
+    'to-do-list-title'
+  ).textContent = `To Do (${todoListCount})`;
+  document.getElementById(
+    'done-list-title'
+  ).textContent = `Done (${doneListCount})`;
+};
+
+document.addEventListener('DOMContentLoaded', () => {
   const addTask = () => {
     const taskValue = taskInput.value.trim();
     if (taskValue === '') {
@@ -53,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Task 삭제 Event Listener
     taskDeleteButton.addEventListener('click', () => {
       taskDeleteContainer.remove();
+      updateTaskCount();
     });
 
     checkbox.addEventListener('change', () => {
@@ -80,6 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         toDoList.appendChild(taskDeleteContainer);
       }
+
+      updateTaskCount();
     });
 
     taskItem.appendChild(checkboxContainer);
@@ -91,6 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
     toDoList.appendChild(taskDeleteContainer);
 
     taskInput.value = '';
+
+    updateTaskCount();
   };
 
   addTaskButton.addEventListener('click', (e) => {
@@ -105,3 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+// 초기 화면 로딩 시 Task 개수 업데이트
+updateTaskCount();
