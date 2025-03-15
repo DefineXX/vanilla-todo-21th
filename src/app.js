@@ -50,6 +50,11 @@ document.addEventListener('DOMContentLoaded', () => {
     taskDeleteButton.innerHTML =
       '<img src="public/trash.svg" alt="Delete Icon">';
 
+    // Task 삭제 Event Listener
+    taskDeleteButton.addEventListener('click', () => {
+      taskDeleteContainer.remove();
+    });
+
     checkbox.addEventListener('change', () => {
       if (checkbox.checked) {
         taskItem.classList.remove('to-do-item');

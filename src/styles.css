@@ -165,7 +165,7 @@ button {
 .task-list-container {
   width: 100%;
   height: fit-content;
-  margin-bottom: 6.4rem;
+  margin-bottom: 5.4rem;
 }
 
 .subtitle {
@@ -215,6 +215,12 @@ button {
   width: fit-content;
   height: fit-content;
   padding: 0.2rem 0.4rem;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  transition: transform 0.15s ease-out;
 }
 
 .to-do-item {
