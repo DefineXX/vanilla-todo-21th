@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (checkbox.checked) {
         taskItem.classList.remove('to-do-item');
         taskItem.classList.add('done-item');
-        taskText.classList.add('done-task');
+        taskText.classList.add('done-text');
 
         const checkIcon = document.createElement('img');
         checkIcon.src = 'icons/check.svg';
