@@ -83,6 +83,10 @@ button {
   font-style: normal;
 
   overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .header {
