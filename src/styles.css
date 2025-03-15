@@ -35,6 +35,10 @@ input {
   font-family: var(--font-primary);
 }
 
+input[type='checkbox'] {
+  appearance: none;
+}
+
 button {
   background: none;
   border: none;
@@ -170,6 +174,8 @@ button {
   border-radius: 16px;
 
   background: transparent;
+
+  overflow-x: scroll;
 }
 
 .to-do {
@@ -178,14 +184,15 @@ button {
 }
 
 .task-checkbox {
-  appearance: none;
-
   width: 1.8rem;
   height: 1.8rem;
-  margin-right: 1.2rem;
+  margin: 0;
+  margin-right: 1.4rem;
 
   border-radius: 4px;
   border: 2px solid var(--walnut);
+
+  flex-shrink: 0;
 
   cursor: pointer;
 }
@@ -193,5 +200,6 @@ button {
 .task-text {
   font-size: var(--font-size-small);
   font-weight: 500;
+  line-height: 1.4;
   color: var(--walnut);
 }
