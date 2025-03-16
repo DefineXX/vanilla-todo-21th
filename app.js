@@ -1,37 +1,84 @@
-const formattedTodayDate = () => {
+document.addEventListener('DOMContentLoaded', () => {
+  // Date-Picker trigger
+  const calendarButton = document.querySelector('.calendar-button');
+  const datePicker = document.getElementById('date-picker');
+
+  // 캘린더 열기
+  calendarButton.addEventListener('click', () => {
+    datePicker.showPicker();
+  });
+
+  // 렌더링할 날짜 형식 변환
+  const formatSelectedDate = (selectedDate) => {
+    const year = selectedDate.getFullYear();
+    const month = String(selectedDate.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+    const day = String(selectedDate.getDate()).padStart(2, '0');
+
+    const weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+    const weekday = weekdays[selectedDate.getDay()];
+
+    return `${year}.${month}.${day} (${weekday})`;
+  };
+
+  // 초기 날짜 설정 (현재 날짜)
   const today = new Date();
 
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
-  const day = String(today.getDate()).padStart(2, '0');
+  document.querySelector('.today-date').textContent = formatSelectedDate(today);
 
-  const weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-  const weekday = weekdays[today.getDay()];
+  // 날짜 선택 이벤트 처리
+  const handleDateSelect = () => {
+    const selectedDate = datePicker.value;
 
-  return `${year}.${month}.${day} (${weekday})`;
-};
+    let dateParts = selectedDate.split('-');
+    let dateObject = new Date(
+      Number(dateParts[0]), // 연도
+      Number(dateParts[1]) - 1, // 월 (0부터 시작)
+      Number(dateParts[2]) // 일
+    );
 
-document.querySelector('.today-date').textContent = formattedTodayDate();
+    document.querySelector('.today-date').textContent =
+      formatSelectedDate(dateObject);
+  };
 
-const taskInput = document.querySelector('.add-task-input');
-const addTaskButton = document.querySelector('.add-task-button');
-const toDoList = document.getElementById('to-do-list');
-const doneList = document.getElementById('done-list');
+  // 날짜 선택 이벤트 처리
+  datePicker.addEventListener('change', () => {
+    handleDateSelect();
+  });
 
-// Task 개수 업데이트
-const updateTaskCount = () => {
-  const todoListCount = toDoList.childElementCount;
-  const doneListCount = doneList.childElementCount;
+  const taskInput = document.querySelector('.add-task-input');
+  const addTaskButton = document.querySelector('.add-task-button');
+  const toDoList = document.getElementById('to-do-list');
+  const doneList = document.getElementById('done-list');
+  const noTasksToDo = document.getElementById('no-tasks-to-do');
+  const noTasksDone = document.getElementById('no-tasks-done');
 
-  document.getElementById(
-    'to-do-list-title'
-  ).textContent = `To Do (${todoListCount})`;
-  document.getElementById(
-    'done-list-title'
-  ).textContent = `Done (${doneListCount})`;
-};
+  // Task 개수 업데이트
+  const updateTaskCount = () => {
+    const todoListCount = toDoList.childElementCount;
+    const doneListCount = doneList.childElementCount;
 
-document.addEventListener('DOMContentLoaded', () => {
+    if (todoListCount === 0) {
+      noTasksToDo.style.display = 'block';
+      noTasksToDo.textContent = 'Add Your Task!';
+    } else {
+      noTasksToDo.style.display = 'none';
+    }
+
+    if (doneListCount === 0) {
+      noTasksDone.style.display = 'block';
+      noTasksDone.textContent = 'No Tasks Done Yet!';
+    } else {
+      noTasksDone.style.display = 'none';
+    }
+
+    document.getElementById(
+      'to-do-list-title'
+    ).textContent = `To Do (${todoListCount})`;
+    document.getElementById(
+      'done-list-title'
+    ).textContent = `Done (${doneListCount})`;
+  };
+
   const addTask = () => {
     const taskValue = taskInput.value.trim();
     if (taskValue === '') {
@@ -45,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskItem = document.createElement('div');
     taskItem.classList.add('task-item', 'to-do-item');
 
-    const checkboxContainer = document.createElement('div');
+    const checkboxContainer = document.createElement('label');
     checkboxContainer.classList.add('checkbox-container');
 
     const checkbox = document.createElement('input');
@@ -122,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
       addTask();
     }
   });
-});
 
-// 초기 화면 로딩 시 Task 개수 업데이트
-updateTaskCount();
+  // 초기 화면 로딩 시 Task 개수 업데이트
+  updateTaskCount();
+});

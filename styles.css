@@ -101,9 +101,10 @@ button {
 .header {
   width: 100%;
   height: fit-content;
-  margin-bottom: 3.2rem;
+  margin-bottom: 3.6rem;
 
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -113,10 +114,36 @@ button {
   color: var(--walnut);
 }
 
+.calendar-button {
+  position: relative;
+
+  width: fit-content;
+  height: fit-content;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.calendar-text {
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--walnut);
+}
+
+.date-picker {
+  position: absolute;
+  top: 30%;
+  right: 0;
+  opacity: 0;
+  z-index: -1;
+}
+
 .date-task-container {
   width: 100%;
   height: fit-content;
-  margin-bottom: 3.6rem;
+  margin-bottom: 4.8rem;
 
   display: flex;
   flex-direction: column;
@@ -132,17 +159,20 @@ button {
 
 .add-task-form {
   width: 100%;
-  height: fit-content;
+  height: 4.2rem;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.8rem;
 }
 
 .add-task-input {
-  width: 26rem;
+  flex-grow: 1;
+
+  width: 100%;
   height: fit-content;
-  padding: 1.2rem;
+  padding: 1rem 1.2rem;
 
   border-radius: 8px;
   border: 1px solid var(--beige);
@@ -160,11 +190,12 @@ button {
 .add-task-button {
   width: fit-content;
   height: fit-content;
-  padding: 0.8rem 1.6rem;
+  padding: 1rem 1.6rem;
 
   border-radius: 12px;
   border: 1px solid var(--beige);
 
+  font-size: 1.4rem;
   color: var(--walnut);
 
   box-shadow: -1px 1px 2px 0px rgba(255, 255, 255, 0.3) inset,
@@ -182,7 +213,7 @@ button {
 }
 
 .subtitle {
-  margin-bottom: 1.8rem;
+  margin-bottom: 2.4rem;
 
   font-size: var(--font-size-medium);
   font-weight: 500;
@@ -237,7 +268,11 @@ button {
 }
 
 .to-do-item {
-  box-shadow: 1px 1px 2px 0px rgba(255, 255, 255, 0.3) inset,
+  box-shadow: -1px 1px 2px 0px rgba(129, 123, 117, 0.2),
+    1px -1px 2px 0px rgba(129, 123, 117, 0.2),
+    -1px -1px 2px 0px rgba(255, 255, 255, 0.9),
+    1px 1px 3px 0px rgba(129, 123, 117, 0.9),
+    1px 1px 2px 0px rgba(255, 255, 255, 0.3) inset,
     -1px -1px 2px 0px rgba(129, 123, 117, 0.5) inset;
 }
 
@@ -281,6 +316,8 @@ button {
   left: 50%;
   z-index: 1;
   transform: translate(-50%, -50%);
+
+  cursor: pointer;
 }
 
 .task-text {
@@ -288,9 +325,18 @@ button {
   font-weight: 400;
   line-height: 1.4;
   color: var(--walnut);
+  overflow-x: scroll;
 }
 
 .done-text {
   text-decoration: line-through;
   color: var(--gray);
+}
+
+.no-tasks {
+  margin: 0;
+  padding: 1.6rem 0;
+  font-size: 1.4rem;
+  color: var(--gray);
+  text-align: center;
 }

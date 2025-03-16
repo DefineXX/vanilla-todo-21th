@@ -18,6 +18,11 @@
       <div class="mobile-phone">
         <header class="header">
           <h1 class="header-title">My Tasks</h1>
+          <button class="calendar-button">
+            <img src="icons/calendar.svg" alt="calendar icon" />
+            <span class="calendar-text">Calendar</span>
+            <input type="date" id="date-picker" class="date-picker" />
+          </button>
         </header>
 
         <div class="date-task-container">
@@ -37,11 +42,13 @@
         <section class="task-list-container">
           <h2 class="subtitle" id="to-do-list-title"></h2>
           <ul class="task-list" id="to-do-list"></ul>
+          <p class="no-tasks" id="no-tasks-to-do"></p>
         </section>
 
         <section class="task-list-container">
           <h2 class="subtitle" id="done-list-title"></h2>
           <ul class="task-list" id="done-list"></ul>
+          <p class="no-tasks" id="no-tasks-done"></p>
         </section>
       </div>
     </div>
