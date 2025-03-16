@@ -45,8 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
     handleDateSelect();
   });
 
-  const taskInput = document.querySelector('.add-task-input');
-  const addTaskButton = document.querySelector('.add-task-button');
+  // Task 추가 관련 요소들
+  const addTaskForm = document.getElementById('add-task-form');
+  const addTaskInput = document.querySelector('.add-task-input');
   const toDoList = document.getElementById('to-do-list');
   const doneList = document.getElementById('done-list');
   const noTasksToDo = document.getElementById('no-tasks-to-do');
@@ -80,11 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const addTask = () => {
-    const taskValue = taskInput.value.trim();
-    if (taskValue === '') {
-      alert('Please Enter Your Task!');
-      return;
-    }
+    const taskValue = addTaskInput.value.trim();
 
     const taskDeleteContainer = document.createElement('li');
     taskDeleteContainer.classList.add('task-delete-container');
@@ -153,17 +150,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     toDoList.appendChild(taskDeleteContainer);
 
-    taskInput.value = '';
+    addTaskInput.value = '';
 
     updateTaskCount();
   };
 
-  addTaskButton.addEventListener('click', (e) => {
+  addTaskForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    addTask();
+
+    if (addTaskInput.value.trim() === '') {
+      alert('Please Enter Your Task!');
+      return;
+    } else {
+      addTask();
+    }
   });
 
-  taskInput.addEventListener('keypress', (e) => {
+  addTaskInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       addTask();
