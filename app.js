@@ -80,28 +80,67 @@ document.addEventListener('DOMContentLoaded', () => {
     ).textContent = `Done (${doneListCount})`;
   };
 
+  // Task 목록
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+  // Task 추가
   const addTask = () => {
     const taskValue = addTaskInput.value.trim();
+    if (taskValue === '') return;
 
+    // Task 객체 생성
+    const task = {
+      id: Date.now(),
+      text: taskValue,
+      completed: false,
+    };
+
+    tasks.push(task);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+
+    // Task 렌더링
+    renderTask(task);
+
+    addTaskInput.value = '';
+    updateTaskCount();
+  };
+
+  // Task 렌더링
+  const renderTask = (taskObj) => {
+    const { id, text, completed } = taskObj;
+
+    // 성능 최적화를 위해 DocumentFragment 사용
+    const fragment = document.createDocumentFragment();
+
+    // Task Box + Delete Button
     const taskDeleteContainer = document.createElement('li');
     taskDeleteContainer.classList.add('task-delete-container');
+    taskDeleteContainer.dataset.id = id; // Task ID 저장
 
+    // Task Box
     const taskItem = document.createElement('div');
     taskItem.classList.add('task-item', 'to-do-item');
 
+    // Checkbox
     const checkboxContainer = document.createElement('label');
     checkboxContainer.classList.add('checkbox-container');
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.classList.add('task-checkbox');
+    checkbox.checked = completed;
 
-    checkboxContainer.appendChild(checkbox);
-
+    // Task 내용
     const taskText = document.createElement('span');
     taskText.classList.add('task-text');
-    taskText.textContent = taskValue;
+    taskText.textContent = text;
 
+    if (completed) {
+      taskItem.classList.add('done-item');
+      taskText.classList.add('done-text');
+    }
+
+    // 삭제 버튼
     const taskDeleteButton = document.createElement('button');
     taskDeleteButton.classList.add('task-delete-button');
     taskDeleteButton.innerHTML =
@@ -109,51 +148,79 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Task 삭제 Event Listener
     taskDeleteButton.addEventListener('click', () => {
-      taskDeleteContainer.remove();
-      updateTaskCount();
+      removeTask(id);
     });
 
+    // Task 완료 상태 변경 Event Listener
     checkbox.addEventListener('change', () => {
-      if (checkbox.checked) {
-        taskItem.classList.remove('to-do-item');
-        taskItem.classList.add('done-item');
-        taskText.classList.add('done-text');
-
-        const checkIcon = document.createElement('img');
-        checkIcon.src = 'icons/check.svg';
-        checkIcon.alt = 'Check Icon';
-        checkIcon.classList.add('check-icon');
-        checkboxContainer.appendChild(checkIcon);
-
-        doneList.appendChild(taskDeleteContainer);
-      } else {
-        taskItem.classList.remove('done-item');
-        taskItem.classList.add('to-do-item');
-        taskText.classList.remove('done-text');
-
-        const checkIcon = document.querySelector('.check-icon');
-        if (checkIcon) {
-          checkIcon.remove();
-        }
-
-        toDoList.appendChild(taskDeleteContainer);
-      }
-
-      updateTaskCount();
+      toggleTask(
+        id,
+        taskDeleteContainer,
+        taskItem,
+        taskText,
+        checkboxContainer
+      );
     });
 
+    checkboxContainer.appendChild(checkbox);
     taskItem.appendChild(checkboxContainer);
     taskItem.appendChild(taskText);
-
     taskDeleteContainer.appendChild(taskItem);
     taskDeleteContainer.appendChild(taskDeleteButton);
 
-    toDoList.appendChild(taskDeleteContainer);
-
-    addTaskInput.value = '';
+    fragment.appendChild(taskDeleteContainer);
+    toDoList.appendChild(fragment);
 
     updateTaskCount();
   };
+
+  // Task 삭제
+  const removeTask = (id) => {
+    tasks = tasks.filter((task) => task.id !== id);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+
+    document.querySelector(`[data-id="${id}"]`).remove();
+    updateTaskCount();
+  };
+
+  // Task 완료 상태 변경
+  const toggleTask = (
+    id,
+    taskDeleteContainer,
+    taskItem,
+    taskText,
+    checkboxContainer
+  ) => {
+    const task = tasks.find((task) => task.id === id);
+    task.completed = !task.completed;
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+
+    taskItem.classList.toggle('done-item');
+    taskText.classList.toggle('done-text');
+
+    if (task.completed) {
+      const checkIcon = document.createElement('img');
+      checkIcon.src = 'icons/check.svg';
+      checkIcon.alt = 'Check Icon';
+      checkIcon.classList.add('check-icon');
+      checkboxContainer.appendChild(checkIcon);
+
+      doneList.appendChild(taskDeleteContainer);
+    } else {
+      const checkIcon = document.querySelector('.check-icon');
+      if (checkIcon) checkIcon.remove();
+
+      toDoList.appendChild(taskDeleteContainer);
+    }
+
+    updateTaskCount();
+  };
+
+  const loadTasks = () => {
+    tasks.forEach((task) => renderTask(task));
+  };
+
+  loadTasks();
 
   addTaskForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -166,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  addTaskInput.addEventListener('keypress', (e) => {
+  addTaskForm.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       addTask();
