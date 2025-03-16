@@ -146,6 +146,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (completed) {
       taskItem.classList.add('done-item');
       taskText.classList.add('done-text');
+
+      // 완료된 Task에 체크 아이콘 추가
+      const checkIcon = document.createElement('img');
+      checkIcon.src = 'icons/check.svg';
+      checkIcon.alt = 'Check Icon';
+      checkIcon.classList.add('check-icon');
+      checkboxContainer.appendChild(checkIcon);
     }
 
     // 삭제 버튼
@@ -177,7 +184,12 @@ document.addEventListener('DOMContentLoaded', () => {
     taskDeleteContainer.appendChild(taskDeleteButton);
 
     fragment.appendChild(taskDeleteContainer);
-    toDoList.appendChild(fragment);
+
+    if (completed) {
+      doneList.appendChild(fragment);
+    } else {
+      toDoList.appendChild(fragment);
+    }
 
     updateTaskCount();
   };
