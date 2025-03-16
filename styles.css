@@ -239,9 +239,7 @@ button {
 }
 
 .task-item {
-  flex-grow: 1;
-
-  width: 100%;
+  width: 28rem;
   height: fit-content;
   padding: 1.4rem 1.6rem;
 
@@ -251,8 +249,6 @@ button {
   border-radius: 16px;
 
   background: transparent;
-
-  overflow-x: scroll;
 }
 
 .task-delete-button {
@@ -325,7 +321,12 @@ button {
   font-weight: 400;
   line-height: 1.4;
   color: var(--walnut);
+
   overflow-x: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .done-text {

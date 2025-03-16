@@ -20,29 +20,34 @@ document.addEventListener('DOMContentLoaded', () => {
     return `${year}.${month}.${day} (${weekday})`;
   };
 
-  // 초기 날짜 설정 (현재 날짜)
-  const today = new Date();
+  let selectedDateStr =
+    localStorage.getItem('selectedDate') ||
+    new Date().toISOString().split('T')[0];
+  let selectedDateObj = new Date(selectedDateStr);
 
-  document.querySelector('.today-date').textContent = formatSelectedDate(today);
+  // 초기 날짜 설정 (현재 날짜)
+  document.querySelector('.today-date').textContent =
+    formatSelectedDate(selectedDateObj);
 
   // 날짜 선택 이벤트 처리
-  const handleDateSelect = () => {
-    const selectedDate = datePicker.value;
+  datePicker.addEventListener('change', (e) => {
+    selectedDateStr = e.target.value;
 
-    let dateParts = selectedDate.split('-');
-    let dateObject = new Date(
+    // 선택한 날짜 저장
+    localStorage.setItem('selectedDate', selectedDateStr);
+
+    const dateParts = selectedDateStr.split('-');
+    const selectedDateObj = new Date(
       Number(dateParts[0]), // 연도
       Number(dateParts[1]) - 1, // 월 (0부터 시작)
       Number(dateParts[2]) // 일
     );
 
     document.querySelector('.today-date').textContent =
-      formatSelectedDate(dateObject);
-  };
+      formatSelectedDate(selectedDateObj);
 
-  // 날짜 선택 이벤트 처리
-  datePicker.addEventListener('change', () => {
-    handleDateSelect();
+    renderTasksForSelectedDate();
+    updateTaskCount();
   });
 
   // Task 추가 관련 요소들
@@ -93,13 +98,16 @@ document.addEventListener('DOMContentLoaded', () => {
       id: Date.now(),
       text: taskValue,
       completed: false,
+      date: selectedDateStr,
     };
 
     tasks.push(task);
     localStorage.setItem('tasks', JSON.stringify(tasks));
 
     // Task 렌더링
-    renderTask(task);
+    if (task.date === selectedDateStr) {
+      renderTask(task);
+    }
 
     addTaskInput.value = '';
     updateTaskCount();
@@ -216,11 +224,16 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTaskCount();
   };
 
-  const loadTasks = () => {
-    tasks.forEach((task) => renderTask(task));
+  // 선택된 날짜에 대한 Task 렌더링
+  const renderTasksForSelectedDate = () => {
+    toDoList.innerHTML = '';
+    doneList.innerHTML = '';
+
+    const filteredTasks = tasks.filter((task) => task.date === selectedDateStr);
+    filteredTasks.forEach((task) => renderTask(task));
   };
 
-  loadTasks();
+  renderTasksForSelectedDate();
 
   addTaskForm.addEventListener('submit', (e) => {
     e.preventDefault();
