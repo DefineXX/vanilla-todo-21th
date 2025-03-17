@@ -134,8 +134,8 @@ button {
 
 .date-picker {
   position: absolute;
-  top: 30%;
-  right: 0;
+  top: 50%;
+  right: 50%;
   opacity: 0;
   z-index: -1;
 }

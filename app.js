@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 캘린더 열기
   calendarButton.addEventListener('click', () => {
-    datePicker.showPicker();
+    datePicker.showPicker ? datePicker.showPicker() : datePicker.click();
   });
 
   // 렌더링할 날짜 형식 변환
