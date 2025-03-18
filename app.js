@@ -8,12 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     datePicker.showPicker ? datePicker.showPicker() : datePicker.click();
   });
 
-  document
-    .querySelector('input[type="date"]')
-    .addEventListener('touchend', function () {
-      this.focus();
-    });
-
   // 렌더링할 날짜 형식 변환
   const formatSelectedDate = (selectedDate) => {
     const year = selectedDate.getFullYear();
